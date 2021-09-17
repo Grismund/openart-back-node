@@ -6,11 +6,6 @@ const authenticate = require('../authenticate');
 
 const router = express.Router();
 
-/* GET users listing. */
-// router.get('/', function(req, res, next) {
-//     res.send('respond with a resource');
-// });
-
 router.get('/', authenticate.verifyUser, authenticate.verifyAdmin, function(req, res, next) {
     User.find()
     .then(users => {
@@ -55,7 +50,6 @@ router.post('/signup', (req, res) => {
     );
 });
 
-//passport automatically checks for unique usernames and throws errors if not.
 router.post('/login', passport.authenticate('local'), (req, res) => {
     const token = authenticate.getToken({_id: req.user._id});
     res.statusCode = 200;

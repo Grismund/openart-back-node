@@ -4,6 +4,7 @@ const User = require('./models/user');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
+const Favorite = require('./models/favorite');
 
 const config = require('./config.js');
 
@@ -39,6 +40,16 @@ exports.jwtPassport = passport.use(
 
 
 exports.verifyUser = passport.authenticate('jwt', {session: false});
+
+// exports.verifyOwner = (req, res, next) => {
+//     if (req.user.username = Favorite.owner){
+//         return next();
+//     } else {
+//         const err= new Error('You are not authorized to perform this operation!');
+//         err.status = 403;
+//         return next(err);
+//     }
+// };
 
 exports.verifyAdmin = (req, res, next) => {
     if (req.user.admin){
